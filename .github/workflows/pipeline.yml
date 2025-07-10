@@ -24,11 +24,8 @@ jobs:
       - name: Rebuild node modules (optional)
         run: npm rebuild
 
-      - name: Verify eslint installation
-        run: which eslint
-        
       - name: Run linter
-        run: npm run lint
+        run: ./node_modules/.bin/eslint . --ext .js
 
       - name: Build Docker image
         run: docker build -t elissia/node-hello .
