@@ -18,8 +18,14 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies (npm ci)
+        run: npm ci
+
+      - name: Rebuild node modules (optional)
+        run: npm rebuild
+
+      - name: Verify eslint installation
+        run: which eslint
         
       - name: Run linter
         run: npm run lint
