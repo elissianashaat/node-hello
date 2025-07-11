@@ -51,10 +51,35 @@ This project uses GitHub Actions for continuous integration and deployment. The 
     terraform destroy
 
 ## Monitoring Setup
-For monitoring, use New Relic:
+For monitoring, you can follow New Relic's steps to monitor the local Node.js application. Here's the process you followed to set it up:
 
-1. Set up New Relic for Node.js by including the agent in your application.
-2. Add the necessary environment variables to your Docker container in Terraform:
-    NEW_RELIC_LICENSE_KEY
-    NEW_RELIC_APP_NAME
-3. Follow the Docker instrumentation method from New Relic's documentation.
+   Follow the New Relic documentation to set up the Node.js agent.
+   In your local development environment, run the application with New Relic enabled using this command:
+
+      NEW_RELIC_APP_NAME=node-hello NEW_RELIC_LICENSE_KEY=<key> node -r newrelic index.js
+
+   This will start your application with New Relic monitoring and allow you to track performance and health in the New      Relic dashboard.
+
+
+## Next Stages:
+1. Commit ID for Docker Images:
+
+In the future, instead of tagging the Docker image with just a version, we'll use the commit ID for better    traceability. This will allow us to track the history of our images and easily debug any issues by identifying the specific commit tied to the image.
+Example of building an image with the commit ID as the tag:
+      COMMIT_ID=$(git rev-parse --short HEAD)
+      docker build -t elissia/node-hello:$COMMIT_ID .
+
+3. Terraform Execution on Remote Server:
+
+Currently, Terraform runs locally to manage the infrastructure. In the future, Terraform will be executed on a remote server (e.g., EC2 instance or Kubernetes orchestrator) to provide a more scalable, consistent, and automated infrastructure deployment process.
+
+3. CI/CD Pipeline Enhancement:
+
+The CI/CD pipeline will be enhanced to incorporate the use of the commit ID for Docker image tagging and deployment, ensuring full traceability of deployments and versioning.
+
+
+
+
+
+
+
